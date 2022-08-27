@@ -15,7 +15,11 @@ In order to install this app, you can just pull down the code from Github. You w
 
 Once you have installed the app, you and you run it by using "npm start", you will receive prompts in the console on how to interact with the app. see the video below for a walkthrough.
 
-![tutorial](video/Walkthrough.mp4)
+
+https://user-images.githubusercontent.com/103006825/187049988-a8557eeb-646a-4d43-b8a8-c1398e129347.mp4
+
+
+
 
 ## License
 
