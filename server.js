@@ -86,7 +86,8 @@ const questions = [ {type: "list", name: 'what_next', message: 'What would you l
 'add an employee', 'update an employee role'], default: [0]
 }]
 
-
+startPrompts()
+function startPrompts() {
 inquirer.prompt(questions)
 .then( async(answers) => {
   console.log(answers)
@@ -96,6 +97,7 @@ inquirer.prompt(questions)
   console.log('Departments')
   resultTables.forEach(el => console.log(`==============================\n
   ${el.name}`))
+  startPrompts()
   }
   if(answers.what_next == 'Show all roles') {
     const rolesResults = await roles.findAll()
@@ -105,7 +107,8 @@ inquirer.prompt(questions)
     rolesResults.forEach(async (item) => {
       const curr_Role_Dept = await departments.findOne({where: {id : `${item.departments_id}`}})
       console.log(`${item.job_title},${item.role_id},${curr_Role_Dept.name},${item.salary}`)})
-  }
+    startPrompts()
+    }
   if(answers.what_next == 'Show all employees') {
     const emp_result = await employees.findAll();
     console.log('==============================')
@@ -113,6 +116,7 @@ inquirer.prompt(questions)
   console.log("EmployeeID|FirstName LastName| Role| Department| Manager| ")
   emp_result.forEach(el => console.log(`==============================
   ${el.id}|${el.first_name} ${el.last_name}|${el.role}|${el.department}|${el.manager}`))
+  startPrompts()
   }
  if(answers.what_next == 'add a department') {
   inquirer.prompt(deptQuestions).then( async(ans) => {
@@ -121,6 +125,7 @@ inquirer.prompt(questions)
       console.log(`The selected dept ${ans.deptName}  was created successfully.`)
     } else {console.log('Something went wrong in creating your requested department.')}
   })
+  startPrompts()
  }
  if(answers.what_next == 'add a role') {
   inquirer.prompt(roleQuestions)
@@ -133,17 +138,20 @@ inquirer.prompt(questions)
   } else {
     console.log(`Your requested role was not successfully created.`)
   }
+  startPrompts()
 })
+
  }
  if(answers.what_next == 'add an employee') {
   inquirer.prompt(empQuestions)
 .then( async(ans) => {
   const createEmp = await employee.create({first_name: ans.empFirstName, last_name:ans.empLastName, role:ans.empRole, manager:ans.empManager})
  if(createEmp) {
-  console.log(`The requested employee ${ans.firstName} ${ans.lastname} has been successfully created.`)
+  console.log(`The requested employee ${ans.empFirstName} ${ans.empLastName} has been successfully created.`)
  } else {
-  console.log(`There was an issue creating the employee ${ans.firstName} ${ans.lastName}`)
+  console.log(`There was an issue creating the employee ${ans.empFirstName} ${ans.empLastName}`)
  }
+ startPrompts()
 })
  }
 if(answers.what_next == 'update an employee role') {
@@ -154,13 +162,13 @@ if(answers.what_next == 'update an employee role') {
     if(findEmp) {
       console.log(`Role updated successfully.`)
     } else { console.log(`Role not updated successfully.`)}
-      
+    startPrompts()
     }
   )
 
 }
 
-})
+})}
 
 
 
